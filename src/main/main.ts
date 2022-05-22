@@ -87,8 +87,8 @@ const createWindow = async () => {
   module.exports = {
     closeWindow: () => {
       mainWindow?.close();
-    }
-  }
+    },
+  };
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -108,16 +108,18 @@ const createWindow = async () => {
   });
 
   ipcMain.on('ipc-example', (_, message) => {
-    if (message[0] === "closeWindow") {
+    if (message[0] === 'closeWindow') {
       mainWindow?.close();
-    }
-    else if (message[0] === "minimizeWindow") {
+    } else if (message[0] === 'minimizeWindow') {
       mainWindow?.minimize();
+    } else if (message[0] === 'maximizeWindow') {
+      if (!mainWindow?.fullScreen) {
+        mainWindow?.setFullScreen(true);
+      } else {
+        mainWindow?.setFullScreen(false);
+      }
     }
-    else if (message[0] === "maximizeWindow") {
-      mainWindow?.maximize();
-    }
-  })
+  });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
