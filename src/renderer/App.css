@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+.content {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    letter-spacing: 1px;
+    @apply scroll-smooth text-base md:text-[18px];
+    @apply transition-[background-color] duration-500;
+}
+
+.cm-theme-dark, .cm-editor { 
+  height: 100%;
+}
+
+.cm-editor > * {
+  font-family: "Jetbrains Mono" !important
+}
+
+body {
+  padding: 0px;
+  margin: 0px; 
+ }
+ 
+ #title-bar {
+  -webkit-app-region: drag;
+  height: 32px; 
+  @apply bg-zinc-800 flex items-center justify-between px-4;
+  margin: 0px; 
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+ }
+ 
+ #title {
+   font-family: 'Zen Kaku Gothic New', monospace;
+   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[0.8rem] font-black;
+ }
+ 
+ #title-bar-btns {
+  -webkit-app-region: no-drag;
+ }
