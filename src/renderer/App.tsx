@@ -18,6 +18,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkGemoji from 'remark-gemoji';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { EditorView } from '@codemirror/view';
 // @ts-ignore
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 // @ts-ignore
@@ -80,7 +81,7 @@ const Main = () => {
           <CodeMirror
             value={content}
             theme="dark"
-            extensions={[markdown()]}
+            extensions={[markdown(), EditorView.lineWrapping]}
             onChange={setContent}
           />
         </div>
