@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap');
 
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
 
 .content {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-family: 'Noto Sans SC', sans-serif;
     letter-spacing: 1px;
-    @apply scroll-smooth text-base md:text-[18px] text-zinc-200;
+    @apply scroll-smooth text-base md:text-[18px] text-zinc-200 font-light;
     @apply transition-[background-color] duration-500;
 }
 

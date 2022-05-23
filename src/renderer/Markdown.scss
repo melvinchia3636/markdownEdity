@@ -1,90 +1,110 @@
 .content {
-  & p, & li {
-      @apply leading-[1.8em] my-4
+  & p,
+  & li {
+    @apply leading-[1.8em] my-4;
   }
-  
+
   & img {
-      @apply rounded-md w-full mt-4
+    @apply rounded-md w-full mt-4;
   }
-  
-  & h1, & h2, & h3, & h4, & h5, & h6 {
-      @apply mt-6 mb-6 font-medium uppercase
+
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    @apply mt-6 mb-6 font-medium uppercase;
   }
-  
+
   & h1 {
-      @apply text-4xl text-center uppercase mt-24 relative mb-16;
+    @apply text-4xl text-center uppercase mt-24 relative mb-16;
   }
-  
+
   & h1::after {
-      @apply content-[""] w-24 border-b-[1.6px] border-dashed border-amber-500 -bottom-4 absolute left-1/2 -translate-x-1/2
+    @apply content-[""] w-24 border-b-[1.6px] border-dashed border-amber-500 -bottom-4 absolute left-1/2 -translate-x-1/2;
   }
-  
+
   & h2 {
-      @apply text-3xl border-l-4 border-amber-500 pl-4 pb-1 mt-16
+    @apply text-3xl border-l-4 border-amber-500 pl-4 pb-1 mt-16;
   }
-  
-  & h3, & h3 > * {
-      @apply font-medium text-2xl mt-12
+
+  & strong {
+    font-weight: 600 !important;
   }
-  
+
+  & h3,
+  & h3 > * {
+    @apply font-medium text-2xl mt-12;
+  }
+
   & h4 {
-      @apply text-amber-500 text-xl
+    @apply text-amber-500 text-xl;
   }
-  
+
+  & h5 {
+    @apply text-lg text-neutral-400;
+  }
+
+  & h6 {
+    @apply text-amber-500;
+  }
+
   & hr {
-      @apply my-12 border-neutral-600
+    @apply my-12 border-neutral-600;
   }
-  
+
   & ul {
-      @apply list-disc list-outside pl-4 my-4
+    @apply list-disc list-outside pl-8 my-4;
   }
-  
+
   & ol {
-      @apply list-decimal list-outside pl-4 my-4
+    @apply list-decimal list-outside pl-8 my-4;
   }
-  
+
   & a {
-      @apply text-amber-500 underline underline-offset-4 decoration-[1.6px]
+    @apply text-amber-500 underline underline-offset-4 decoration-[1.6px];
   }
-  
+
   & blockquote {
-      @apply bg-amber-500 bg-opacity-10 pl-4 border-l-2 border-amber-500 py-2 pr-4 my-6
+    @apply bg-amber-500 bg-opacity-10 pl-4 border-l-2 border-amber-500 py-2 pr-4 my-6;
   }
-  
+
   & table {
-      @apply my-8 overflow-x-auto w-full
+    @apply my-8 overflow-x-auto w-full;
   }
-  
+
   & table tr {
-      @apply border dark:border-neutral-700 py-6 relative;
+    @apply border dark:border-neutral-700 py-6 relative;
   }
-  
+
   & table th {
-      @apply text-left text-base
+    @apply text-left text-base;
   }
 
   & table :is(th, td) {
-      @apply border dark:border-neutral-700 p-2
+    @apply border dark:border-neutral-700 p-2;
   }
-  
+
   & strong {
-      @apply font-medium
+    @apply font-medium;
   }
-  
+
   & pre {
-      @apply bg-neutral-200 dark:bg-[rgba(40,44,52,0.5)] dark:bg-opacity-40 p-4 rounded-md overflow-x-scroll
+    @apply bg-neutral-200 dark:bg-[rgba(40,44,52,0.5)] dark:bg-opacity-40 p-4 rounded-md overflow-x-scroll;
   }
-  
-  & code, & code * {
-      @apply text-sm font-["Jetbrains_Mono"] dark:text-neutral-100;
-      background-color: transparent !important;
+
+  & code,
+  & code * {
+    @apply text-sm font-["Jetbrains_Mono"] dark:text-neutral-100;
+    background-color: transparent !important;
   }
-  
-  & a[aria-describedby="footnote-label"] {
-      @apply no-underline ml-0.5
+
+  & a[aria-describedby='footnote-label'] {
+    @apply no-underline ml-0.5;
   }
-  
+
   & sup a {
-      @apply no-underline text-xs
+    @apply no-underline text-xs;
   }
 }
