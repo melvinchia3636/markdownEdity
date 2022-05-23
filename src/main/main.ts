@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -76,8 +76,9 @@ const createWindow = async () => {
     transparent: true,
     frame: false,
     icon: getAssetPath('icon.png'),
+    hasShadow: false,
     webPreferences: {
-      devTools: false,
+      devTools: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -107,17 +108,60 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  ipcMain.on('ipc-example', (_, message) => {
-    if (message[0] === 'closeWindow') {
-      mainWindow?.close();
-    } else if (message[0] === 'minimizeWindow') {
-      mainWindow?.minimize();
-    } else if (message[0] === 'maximizeWindow') {
-      if (!mainWindow?.fullScreen) {
-        mainWindow?.setFullScreen(true);
-      } else {
-        mainWindow?.setFullScreen(false);
-      }
+  ipcMain.on('ipc', (_, message) => {
+    switch (message[0]) {
+      case 'openExternal':
+        shell.openExternal(message[1]);
+        break;
+      case 'closeWindow':
+        mainWindow?.close();
+        break;
+      case 'minimizeWindow':
+        mainWindow?.minimize();
+        break;
+      case 'maximizeWindow':
+        if (!mainWindow?.fullScreen) {
+          mainWindow?.setFullScreen(true);
+        } else {
+          mainWindow?.setFullScreen(false);
+        }
+        break;
+      case 'openFileDialog':
+        if (mainWindow) {
+          dialog
+            .showOpenDialog(mainWindow, {
+              properties: ['openFile'],
+              filters: [
+                {
+                  name: 'Markdown',
+                  extensions: [
+                    'md',
+                    'markdown',
+                    'mdown',
+                    'mkd',
+                    'mkdn',
+                    'mdwn',
+                    'mdtxt',
+                  ],
+                },
+              ],
+            })
+            .then((result) => {
+              if (result.canceled) {
+                return;
+              }
+              mainWindow?.webContents.send('ipc', [
+                'open-file-content',
+                result.filePaths[0],
+              ]);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        break;
+      default:
+        break;
     }
   });
 

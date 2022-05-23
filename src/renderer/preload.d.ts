@@ -11,6 +11,7 @@ declare global {
         ): (() => void) | undefined;
         once(channel: string, func: (...args: unknown[]) => void): void;
       };
+      readFile: (filePath: string) => Promise<string>;
     };
   }
 }

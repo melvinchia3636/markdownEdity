@@ -8,7 +8,7 @@
 .content {
     font-family: 'Zen Kaku Gothic New', sans-serif;
     letter-spacing: 1px;
-    @apply scroll-smooth text-base md:text-[18px];
+    @apply scroll-smooth text-base md:text-[18px] text-zinc-200;
     @apply transition-[background-color] duration-500;
 }
 
@@ -37,9 +37,31 @@ body {
  
  #title {
    font-family: 'Zen Kaku Gothic New', monospace;
-   @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[0.8rem] font-black;
+   @apply absolute top-1/2 left-1/2 text-zinc-200 -translate-x-1/2 -translate-y-1/2 text-[0.8rem] font-black;
  }
  
  #title-bar-btns {
   -webkit-app-region: no-drag;
  }
+
+ .cm-theme-dark  * {
+   background-color: transparent !important;
+}
+
+ .cm-editor.cm-focused { border-width: 0px; outline: none }
+
+ [contenteditable] {
+  outline: 0px solid transparent;
+}
+
+.cm-content {
+  padding: 1rem !important
+}
+
+.cm-gutters {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.cm-selectionBackground {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
