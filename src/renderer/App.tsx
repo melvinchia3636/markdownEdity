@@ -54,9 +54,11 @@ const Main = () => {
             .then((e) => setContent(e))
             .catch((e) => console.log(e));
           break;
-          case 'new-file':
-            window.electron.ipcRenderer.sendMessage('ipc', ['newFileConfirmation']);
-            break;
+        case 'new-file':
+          window.electron.ipcRenderer.sendMessage('ipc', [
+            'newFileConfirmation',
+          ]);
+          break;
         default:
           break;
       }
