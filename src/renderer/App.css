@@ -11,7 +11,7 @@
     @apply transition-[background-color] duration-500;
 }
 
-.cm-theme-dark, .cm-editor { 
+.cm-theme-dark, .cm-editor {
   height: 100%;
 }
 
@@ -21,24 +21,24 @@
 
 body {
   padding: 0px;
-  margin: 0px; 
+  margin: 0px;
  }
- 
+
  #title-bar {
   -webkit-app-region: drag;
-  height: 32px; 
+  height: 32px;
   @apply bg-zinc-800 flex items-center justify-between px-4;
-  margin: 0px; 
+  margin: 0px;
   position: fixed;
   z-index: 9999;
   width: 100%;
  }
- 
+
  #title {
-   font-family: 'Zen Kaku Gothic New', monospace;
-   @apply absolute top-1/2 left-1/2 text-zinc-200 -translate-x-1/2 -translate-y-1/2 text-[0.8rem] font-black;
+   font-family: 'Noto Sans SC', monospace;
+   @apply absolute top-1/2 left-1/2 text-zinc-200 -translate-x-1/2 -translate-y-1/2 text-[0.7rem] font-black w-full text-center;
  }
- 
+
  #title-bar-btns {
   -webkit-app-region: no-drag;
  }
@@ -59,6 +59,12 @@ body {
 
 .cm-gutters {
   background-color: rgba(0, 0, 0, 0.4) !important;
+  padding: 0 4px;
+}
+
+[title="Fold line"] {
+  @apply block;
+  margin-top: -5px !important
 }
 
 .cm-selectionBackground {

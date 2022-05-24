@@ -12,6 +12,8 @@ declare global {
         once(channel: string, func: (...args: unknown[]) => void): void;
       };
       readFile: (filePath: string) => Promise<string>;
+      writeFile: (filePath: string, data: string) => Promise<void>;
+      confirmNewFile: () => Promise<boolean>;
     };
   }
 }

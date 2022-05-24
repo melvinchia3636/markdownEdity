@@ -89,21 +89,21 @@ export default class MenuBuilder {
           label: 'New',
           accelerator: 'Command+N',
           click: () => {
-            this.mainWindow.webContents.send('new-file');
+            this.mainWindow.webContents.send('ipc', ['new-file']);
           },
         },
         {
           label: 'Open',
           accelerator: 'Command+O',
           click: () => {
-              this.mainWindow.webContents.send('ipc', ['open-file']);
+            this.mainWindow.webContents.send('ipc', ['open-file']);
           },
         },
         {
           label: 'Save',
           accelerator: 'Command+S',
           click: () => {
-            this.mainWindow.webContents.send('save-file');
+            this.mainWindow.webContents.send('ipc', ['save-file']);
           },
         },
         {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/button-has-type */
@@ -11,7 +12,7 @@ import './App.css';
 import './Markdown.scss';
 import CodeMirror from '@uiw/react-codemirror';
 import { markdown } from '@codemirror/lang-markdown';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -28,7 +29,28 @@ import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
 
 const Main = () => {
-  const [content, setContent] = useState('');
+  const [_content, _setContent] = useState('');
+  const [_currentFile, _setCurrentFile] = useState('');
+  const [_isSaved, _setIsSaved] = useState(true);
+
+  const currentFile = useRef(_currentFile);
+  const content = useRef(_content);
+  const isSaved = useRef(_isSaved);
+
+  const setCurrentFile = (newCurrentFile: string) => {
+    currentFile.current = newCurrentFile;
+    _setCurrentFile(newCurrentFile);
+  };
+
+  const setContent = (newContent: string) => {
+    content.current = newContent;
+    _setContent(newContent);
+  };
+
+  const setIsSaved = (newIsSaved: boolean) => {
+    isSaved.current = newIsSaved;
+    _setIsSaved(newIsSaved);
+  };
 
   useEffect(() => {
     // @ts-ignore
@@ -50,26 +72,59 @@ const Main = () => {
           window.electron.ipcRenderer.sendMessage('ipc', ['openFileDialog']);
           break;
         case 'open-file-content':
+          setCurrentFile((args as never)[1]);
           window.electron
             .readFile((args as never)[1])
-            .then((e) => setContent(e))
+            .then((e) => {
+              setContent(e);
+              setIsSaved(true);
+              return 0;
+            })
             .catch((e) => console.log(e));
           break;
         case 'new-file':
-          window.electron.ipcRenderer.sendMessage('ipc', [
-            'newFileConfirmation',
-          ]);
+          if (!isSaved.current) {
+            window.electron.ipcRenderer.sendMessage('ipc', [
+              'newFileConfirmation',
+            ]);
+            break;
+          }
+          setCurrentFile('');
+          setContent('');
+          setIsSaved(true);
+          break;
+        case 'new-file-confirmed':
+          setCurrentFile('');
+          setContent('');
+          setIsSaved(true);
+          break;
+        case 'save-file':
+          if (currentFile.current) {
+            window.electron
+              .writeFile(currentFile.current, content.current)
+              .then(() => {
+                setIsSaved(true);
+                return 0;
+              })
+              .catch((e) => {
+                throw e;
+              });
+          }
           break;
         default:
           break;
       }
+      return 0;
     });
   }, []);
 
   return (
     <div className="w-full h-screen flex flex-col">
       <div id="title-bar">
-        <div id="title">Markdown Editory</div>
+        <div id="title">
+          {_currentFile.split('/').pop() || 'Untitled'}
+          {!_isSaved && '*'} - Markdown Editory
+        </div>
         <div id="title-bar-btns" className="flex gap-2">
           <button id="close-btn" className="w-3 h-3 rounded-full bg-rose-500" />
           <button id="min-btn" className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -79,10 +134,15 @@ const Main = () => {
       <div className="w-full h-full flex pt-[32px]">
         <div className="w-1/2 h-full flex flex-col bg-zinc-900 bg-opacity-70 border-r border-zinc-500 border-opacity-60">
           <CodeMirror
-            value={content}
+            value={_content}
             theme="dark"
             extensions={[markdown(), EditorView.lineWrapping]}
-            onChange={setContent}
+            onChange={(e) => {
+              setContent(e);
+              if (Math.abs(e.length - _content.length) === 1) {
+                setIsSaved(false);
+              }
+            }}
           />
         </div>
         <div className="w-1/2 h-full overflow-y-auto overflow-x-hidden p-12 content bg-zinc-900 bg-opacity-70">
@@ -90,6 +150,7 @@ const Main = () => {
             components={{
               a: ({ href, children }) => (
                 <a
+                  className="cursor-pointer"
                   aria-label={href}
                   onClick={() => {
                     window.electron.ipcRenderer.sendMessage('ipc', [
@@ -125,7 +186,7 @@ const Main = () => {
             remarkPlugins={[remarkGfm, remarkMath, remarkGemoji, remarkToc]}
             rehypePlugins={[rehypeKatex, rehypeRaw]}
           >
-            {content}
+            {_content}
           </ReactMarkdown>
         </div>
       </div>

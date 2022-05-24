@@ -160,6 +160,26 @@ const createWindow = async () => {
             });
         }
         break;
+      case 'newFileConfirmation':
+        if (mainWindow) {
+          dialog
+            .showMessageBox(mainWindow, {
+              type: 'question',
+              buttons: ['Yes', 'No'],
+              defaultId: 0,
+              title: 'New File',
+              message: 'Do you want to create a new file?',
+            })
+            .then((result) => {
+              if (result.response === 0) {
+                mainWindow?.webContents.send('ipc', ['new-file-confirmed']);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        break;
       default:
         break;
     }
