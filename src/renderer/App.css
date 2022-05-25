@@ -13,6 +13,7 @@
 
 .cm-theme-dark, .cm-editor {
   height: 100%;
+  background-color: transparent !important;
 }
 
 .cm-editor > * {
@@ -43,7 +44,7 @@ body {
   -webkit-app-region: no-drag;
  }
 
- .cm-theme-dark  * {
+ .cm-editor * {
    background-color: transparent !important;
 }
 

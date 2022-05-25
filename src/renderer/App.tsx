@@ -143,6 +143,32 @@ const Main = () => {
                 setIsSaved(false);
               }
             }}
+            onKeyDown={(e) => {
+              if (navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey) {
+                if ('123456'.includes(e.key)) {
+                  e.preventDefault();
+                  const lineNumber =
+                    parseInt(
+                      document.querySelector('.cm-activeLineGutter')
+                        ?.textContent || '0',
+                      10
+                    ) - 1;
+                  const line =
+                    document.querySelector('.cm-activeLine')?.textContent;
+                  const replacedLine =
+                    line?.replace(
+                      /^#*\s*/gm,
+                      `${'#'.repeat(parseInt(e.key, 10))} `
+                    ) ||
+                    line ||
+                    '';
+
+                  // @ts-ignore
+                  document.querySelector('.cm-activeLine').innerHTML =
+                    replacedLine;
+                }
+              }
+            }}
           />
         </div>
         <div className="w-1/2 h-full overflow-y-auto overflow-x-hidden p-12 content bg-zinc-900 bg-opacity-70">
